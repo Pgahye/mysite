@@ -1,23 +1,17 @@
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn"%> 
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
 <head>
 <title>mysite</title>
 <meta http-equiv="content-type" content="text/html; charset=utf-8">
-<link href="/mysite/assets/css/board.css" rel="stylesheet" type="text/css">
+<link href="${pageContext.request.contextPath }/assets/css/board.css" rel="stylesheet" type="text/css">
 </head>
 <body>
 	<div id="container">
-		<div id="header">
-			<h1>MySite</h1>
-			<ul>
-				<li><a href="">로그인</a><li>
-				<li><a href="">회원가입</a><li>
-				<li><a href="">회원정보수정</a><li>
-				<li><a href="">로그아웃</a><li>
-				<li>님 안녕하세요 ^^;</li>
-			</ul>
-		</div>
+		<c:import url="/WEB-INF/views/include/header.jsp" />
 		<div id="content">
 			<div id="board">
 				<form id="search_form" action="" method="post">
@@ -32,47 +26,72 @@
 						<th>조회수</th>
 						<th>작성일</th>
 						<th>&nbsp;</th>
-					</tr>				
+					</tr>	
+					
+						<c:set var="count" value="${fn:length(list) }"/>
+						
+					
+						<c:forEach items="${list }" var="vo" varStatus="status">
+				
+						
 					<tr>
-						<td>3</td>
-						<td><a href="">세 번째 글입니다.</a></td>
-						<td>안대혁</td>
-						<td>3</td>
-						<td>2015-10-11 12:04:20</td>
-						<td><a href="" class="del">삭제</a></td>
+						<td>${vo.no}</td>
+						<c:choose>
+							<c:when test="${vo.dep>=1 }">
+							<td class="left" style="padding-left:${vo.dep*10}px">
+							<img src="${pageContext.request.contextPath }/assets/images/reply.png">
+							</c:when>
+							<c:otherwise> 
+								<td class="left">
+							</c:otherwise>
+						
+						</c:choose>					
+										
+						<a href="${pageContext.servletContext.contextPath }/board?a=view&no=${vo.no}">${vo.title }</a>
+						</td>
+						
+						<td>${vo.user_name }</td>
+						<td>${vo.hit }</td>
+						<td>${vo.reg_date }</td>
+						<td><a href="${pageContext.servletContext.contextPath }/board?a=delete&no=${vo.no}&userno=${vo.user_no}" class="del">삭제</a></td>
 					</tr>
-					<tr>
-						<td>2</td>
-						<td><a href="">두 번째 글입니다.</a></td>
-						<td>안대혁</td>
-						<td>3</td>
-						<td>2015-10-02 12:04:12</td>
-						<td><a href="" class="del">삭제</a></td>
-					</tr>
-					<tr>
-						<td>1</td>
-						<td><a href="">첫 번째 글입니다.</a></td>
-						<td>안대혁</td>
-						<td>3</td>
-						<td>2015-09-25 07:24:32</td>
-						<td><a href="" class="del">삭제</a></td>
-					</tr>
+					
+
+					
+					</c:forEach>	
+					
+
+					
 				</table>
+				
+	
+				
+				<div class="pager">
+				
+					<ul>
+						<li><a href="">◀</a></li>
+						
+						<c:forEach var='i' begin='1' end='${sum }'>
+								<li><a href="${pageContext.servletContext.contextPath }/board?num=${i }">${i }</a></li>
+						</c:forEach>
+					
+					<!-- <li class="selected">3</li>  -->	 
+					
+						<li><a href="">▶</a></li>
+					</ul>
+					
+					
+				</div>		
+						
 				<div class="bottom">
-					<a href="" id="new-book">글쓰기</a>
+					<a href="${pageContext.servletContext.contextPath }/board?a=writeForm" id="new-book">글쓰기</a>
 				</div>				
 			</div>
 		</div>
-		<div id="navigation">
-			<ul>
-				<li><a href="">안대혁</a></li>
-				<li><a href="">방명록</a></li>
-				<li><a href="">게시판</a></li>
-			</ul>
-		</div>
-		<div id="footer">
-			<p>(c)opyright 2014 </p>
-		</div>
+		<c:import url="/WEB-INF/views/include/navigation.jsp">
+			<c:param name="menu" value="board"/>
+		</c:import>
+		<c:import url="/WEB-INF/views/include/foot.jsp" />
 	</div>
 </body>
 </html>

@@ -17,7 +17,7 @@ public class AddAction implements Action {
 	public void execute(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
 		// TODO Auto-generated method stub
 		
-		request.setCharacterEncoding("utf-8");
+		//request.setCharacterEncoding("utf-8");
 		String name = WebUtils.checkParameter(request.getParameter("name"), "");
 		String pwd =  WebUtils.checkParameter(request.getParameter("pwd"), "");
 		String message = WebUtils.checkParameter(request.getParameter("message"), "");
@@ -26,12 +26,13 @@ public class AddAction implements Action {
 		vo.setName(name);
 		vo.setPwd(pwd);
 		vo.setMessage(message);
+
 		
 		new guestBookDao().insert(vo);
 		
 		//리다이렉트 응답
 		WebUtils.redirect(request.getContextPath()+"/guestbook", request, response);
-		//response.sendRedirect("/guestbook2/gb");  //밑의 html은 필요가 없어짐 
+	
 
 	}
 

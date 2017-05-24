@@ -1,3 +1,6 @@
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn"%>
 <%@ page contentType="text/html;charset=UTF-8" %>
 <!doctype html>
 <html>
@@ -8,20 +11,24 @@
 </head>
 <body>
 	<div id="container">
-			<jsp:include page="/WEB-INF/views/include/header.jsp"/>
+			<c:import url="/WEB-INF/views/include/header.jsp"></c:import>
 		<div id="content">
 			<div id="guestbook" class="delete-form">
-				<form method="post" action="<%=request.getContextPath()%>/guestbook?a=delete">
-					<input type='hidden' name="no" value="<%=request.getParameter("no") %>">
+				<form method="post" action="${pageContext.servletContext.contextPath }/guestbook?a=delete">
+					<input type='hidden' name="no" value="${param.no }">
 					<label>비밀번호</label>
 					<input type="password" name="pwd">
 					<input type="submit" value="확인">
 				</form>
-				<a href="<%=request.getContextPath() %>/guestbook">방명록 리스트</a>
+				<a href="${pageContext.servletContext.contextPath }/guestbook">방명록 리스트</a>
 			</div>
 		</div>
-		<jsp:include page="/WEB-INF/views/include/navigation.jsp"/>
-		<jsp:include page="/WEB-INF/views/include/foot.jsp"/>
+		
+		
+		<c:import url="/WEB-INF/views/include/navigation.jsp">
+			<c:param name="menu" value="main"/>
+		</c:import>	
+		<c:import url="/WEB-INF/views/include/foot.jsp"/>
 	</div>
 </body>
 </html>

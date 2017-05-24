@@ -1,3 +1,6 @@
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn"%>
 <%@ page contentType="text/html;charset=UTF-8" %>
 <!doctype html>
 <html>
@@ -8,18 +11,20 @@
 </head>
 <body>
 	<div id="container">
-		<jsp:include page="/WEB-INF/views/include/header.jsp"/>
+		<c:import url="/WEB-INF/views/include/header.jsp"></c:import>
 		<div id="content">
 			<div id="user">
 				<p class="jr-success">
 					회원가입을 축하합니다.
 					<br><br>
-					<a href="<%=request.getContextPath() %>/user?a=loginform">로그인하기</a>
+					<a href="${pageContext.servletContext.contextPath }/user?a=loginform">로그인하기</a>
 				</p>				
 			</div>
 		</div>
-		<jsp:include page="/WEB-INF/views/include/navigation.jsp"/>
-		<jsp:include page="/WEB-INF/views/include/foot.jsp"/>
+		<c:import url="/WEB-INF/views/include/navigation.jsp">
+			<c:param name="menu" value="main"/>
+		</c:import>	
+		<c:import url="/WEB-INF/views/include/foot.jsp"/>
 	</div>
 </body>
 </html>

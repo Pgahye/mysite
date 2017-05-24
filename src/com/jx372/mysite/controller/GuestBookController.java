@@ -12,7 +12,7 @@ import com.jx372.web.action.Action;
 import com.jx372.web.action.ActionFactory;
 
 
-@WebServlet("/guestbook")
+//@WebServlet("/guestbook")
 public class GuestBookController extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 
@@ -21,7 +21,7 @@ public class GuestBookController extends HttpServlet {
 		// TODO Auto-generated method stub
 		
 		
-		request.setCharacterEncoding("UTF-8"); //한글처리 
+		//request.setCharacterEncoding("UTF-8"); //한글처리 
 		
 		String actionName= request.getParameter("a");
 		

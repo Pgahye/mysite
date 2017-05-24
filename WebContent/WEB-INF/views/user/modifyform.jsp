@@ -1,9 +1,10 @@
-<%@page import="com.jx372.mysite.dao.UserDao"%>
-<%@page import="com.jx372.mysite.vo.UserVo"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%
  
-	UserVo authUser = (UserVo)session.getAttribute("authUser");
+	//UserVo authUser = (UserVo)session.getAttribute("authUser");
 	
 %>
 <!doctype html>
@@ -16,18 +17,18 @@
 <body>
 	<div id="container">
 		
-		<jsp:include page="/WEB-INF/views/include/header.jsp"/>
+		<c:import url="/WEB-INF/views/include/header.jsp"></c:import>
 		
 		<div id="content">
 			<div id="user">
 
 				<form id="join-form" name="modifyForm" method="post" action="/mysite/user?a=modify">
 					<label class="block-label" for="name">이름</label>
-					<input type="hidden" name="no" value="<%=authUser.getNo()  %>">
-					<input id="name" name="name" type="text" value="<%=authUser.getName()  %>">
+					<input type="hidden" name="no" value="${authUser.no }">
+					<input id="name" name="name" type="text" value="${authUser.name }">
 
 					<label class="block-label" for="email">이메일</label>
-					<input id="email" name="email" type="text" value="<%=authUser.getEmail()  %>">
+					<input id="email" name="email" type="text" value="${authUser.email }">
 					
 					<label class="block-label">패스워드</label>
 					<input name="password" type="password" value="">
@@ -35,24 +36,25 @@
 					
 					<fieldset>
 						<legend>성별</legend>
-						<%
-						if(authUser.getGender().equals("female")){
 						
-						
-						%>
+					<c:choose>
+							
+					<c:when test="${authUser.gender == 'female'}">
+					
 						<label>남</label> <input type="radio" name="gender" value="male" >
 						<label>여</label> <input type="radio" name="gender" value="female" checked="checked">
 						
-						<%
-						}
-						else if(authUser.getGender().equals("male")){
-						%>
-						
+					</c:when>
+					
+					<c:when test="${authUser.gender == 'male'}">
+					
 						<label>남</label> <input type="radio" name="gender" value="male" checked ="checked">
 						<label>여</label> <input type="radio" name="gender" value="female">
-						<%
-						}
-						%>
+						
+					</c:when>
+					
+					</c:choose>
+						
 					</fieldset>
 					
 				
@@ -64,8 +66,10 @@
 		</div>
 		
 		
-		<jsp:include page="/WEB-INF/views/include/navigation.jsp"/>
-		<jsp:include page="/WEB-INF/views/include/foot.jsp"/>
+		<c:import url="/WEB-INF/views/include/navigation.jsp">
+			<c:param name="menu" value="main"/>
+		</c:import>	
+		<c:import url="/WEB-INF/views/include/foot.jsp"/>
 		
 	</div>
 </body>
