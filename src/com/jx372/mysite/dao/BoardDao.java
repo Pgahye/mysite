@@ -9,6 +9,8 @@ import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 
+
+
 import com.jx372.mysite.vo.BoardVo;
 import com.jx372.mysite.vo.UserVo;
 import com.jx372.mysite.vo.guestBookVo;
@@ -176,9 +178,13 @@ public boolean insert(BoardVo vo){
 			
 			String sql1="select ifnull(max(group_no),0) +1  from board";
 		
+		
 			
 			rs = stmt.executeQuery(sql1);
+			
+	
 			pstmt= conn.prepareStatement(sql);
+		
 			
 			Long group_no=null;
 			
@@ -187,11 +193,13 @@ public boolean insert(BoardVo vo){
 				group_no=rs.getLong(1);
 			
 			}
-			
+		
 			pstmt.setString(1, vo.getTitle());
 			pstmt.setString(2, vo.getContent());
 			pstmt.setLong(3, group_no);
 			pstmt.setLong(4, vo.getUser_no());
+			
+			System.out.println(vo.getTitle()+" "+vo.getContent()+" "+group_no+" "+vo.getUser_no());
 			
 			int count = pstmt.executeUpdate();
 			
